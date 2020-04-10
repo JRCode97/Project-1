@@ -2,16 +2,18 @@ package dev.rivera.entities;
 
 public class Employee {
 	private int eId;
+	private String name;
 	private String username;
 	private String password;
 	public Employee() {
 		super();
 	}
-	public Employee(int eId, String username, String password) {
+	public Employee(int eId, String username, String password,String name) {
 		super();
 		this.eId = eId;
 		this.username = username;
 		this.password = password;
+		this.name = name;
 	}
 	public int geteId() {
 		return eId;
@@ -30,6 +32,13 @@ public class Employee {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	@Override
 	public String toString() {
