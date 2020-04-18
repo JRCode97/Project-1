@@ -3,6 +3,7 @@ package dev.rivera.daos;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +53,8 @@ public class ReimbursementDAOdb implements ReimbursementDAO {
 				reimbursements.add(currentReimbursement);
 			}if(!rs.next())
 				System.out.println("no reimbursements found");
-	}catch(Exception e){
-		System.out.println(e);
+	}catch(SQLException e){
+		e.printStackTrace();
 	}
 	return reimbursements;
 	}
@@ -76,7 +77,7 @@ try(Connection con = ConnectionUtils.createConnection()) {
 			}if(!rs.next())
 				System.out.println("no reimbursements found");
 	}catch(Exception e){
-		System.out.println(e);
+		e.printStackTrace();
 	}
 	return reimbursement;
 	}

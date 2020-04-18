@@ -58,4 +58,24 @@ public class ManagerDAOdb implements ManagerDAO {
 			return true;
 	}
 
+	@Override
+	public Manager getManagerByLoginCredentials(String username, String password) {
+		try (Connection con = ConnectionUtils.createConnection()){
+			String sql = "SELECT * FROM MANAGER WHERE USERNAME = ? AND PASSWORD = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Manager m = new Manager(rs.getInt(1),rs.getString(2),rs.getString(3));
+				return m;
+			}else {
+				System.out.println("manager not found");
+			}
+		}catch(Exception ex) {
+			System.out.println(ex);
+		}
+		return null;
+	}
+
 }
