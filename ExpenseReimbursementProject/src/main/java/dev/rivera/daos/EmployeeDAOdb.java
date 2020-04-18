@@ -60,4 +60,24 @@ public class EmployeeDAOdb implements EmployeeDAO {
 			return true;
 	}
 
+	@Override
+	public Employee getEmployeeByLoginCredentials(String username, String password) {
+		try (Connection con = ConnectionUtils.createConnection()){
+			String sql = "SELECT * FROM EMPLOYEE WHERE USERNAME = ? AND PASSWORD = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, username);
+			ps.setString(2,password);
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()) {
+				Employee e = new Employee(rs.getInt(1),rs.getString(3),rs.getString(4),rs.getString(2));
+				return e;
+			}else {
+				System.out.println("employee not found");
+			}
+		}catch(Exception ex) {
+			System.out.println(ex);
+		}
+		return null;
+	}
+
 }
