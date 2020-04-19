@@ -4,6 +4,7 @@ import java.util.List;
 
 import dev.rivera.daos.ReimbursementDAO;
 import dev.rivera.daos.ReimbursementDAOdb;
+import dev.rivera.entities.Employee;
 import dev.rivera.entities.Reimbursement;
 
 public class ReimbursementServiceimpl implements ReimbursementService {
@@ -19,7 +20,6 @@ public class ReimbursementServiceimpl implements ReimbursementService {
 	@Override
 	public Reimbursement submitReimbursement(Reimbursement reimbursement) {
 		reimbursement = rd.createReimbursement(reimbursement);
-		
 		return reimbursement;
 	}
 
@@ -35,6 +35,15 @@ public class ReimbursementServiceimpl implements ReimbursementService {
 		reimbursement.setStatus("denied");
 		reimbursement = rd.UpdateReimbursement(reimbursement);
 		return reimbursement;
+	}
+	@Override
+	public List<Reimbursement> getSpecificEmployeeReimbursments(Employee e) {
+		return rd.getReimbursementByEmployee(e);
+	}
+	@Override
+	public boolean deleteReimbursement(Reimbursement reimbursement) {
+		
+		return rd.DeleteReimbursement(reimbursement);
 	}
 
 }
