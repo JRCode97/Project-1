@@ -89,18 +89,19 @@ try(Connection con = ConnectionUtils.createConnection()) {
 		try(Connection con = ConnectionUtils.createConnection()) {
 					
 					
-					String Query = "SELECT REIMBURSEMENT.ID,REIMBURSEMENT.AMOUNT,REIMBURSEMENT.DESCRIPTION,REIMBURSEMENT.STATUS,REIMBURSEMENT.REQUESTERID FROM REIMBURSEMENT,EMPLOYEE WHERE REIMBURSEMENT.REQUESTERID = EMPLOYEE.ID AND EMPLOYEE.ID = ? ";
+					String Query = "SELECT REIMBURSEMENT.ID,REIMBURSEMENT.AMOUNT,REIMBURSEMENT.DESCRIPTION,REIMBURSEMENT.STATUS,REIMBURSEMENT.REQUESTERID FROM REIMBURSEMENT,EMPLOYEE WHERE REIMBURSEMENT.REQUESTERID = EMPLOYEE.ID AND REIMBURSEMENT.REQUESTERID = ? ";
 					PreparedStatement recieve = con.prepareStatement(Query);
 					recieve.setInt(1, e.geteId());
 					ResultSet rs = recieve.executeQuery();
-					
+
 					while(rs.next()) {
 						System.out.println("found reimbursement");
 						 reimbursement = new Reimbursement(rs.getInt("ID"),rs.getInt("AMOUNT"),rs.getString("DESCRIPTION"),rs.getInt("REQUESTERID"),rs.getString("STATUS"));
 						System.out.println(reimbursement);
 						reimbursements.add(reimbursement);
-						return reimbursements;
-					}if(!rs.next())
+						
+					}
+					if(!rs.next())
 						System.out.println("no reimbursements found");
 			}catch(Exception ex){
 				System.out.println(ex);

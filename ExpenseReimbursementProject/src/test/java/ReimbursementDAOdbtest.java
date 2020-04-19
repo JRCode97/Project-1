@@ -44,7 +44,7 @@ public class ReimbursementDAOdbtest {
 	}
 	@Test
 	public void deleteReimbursementtest() {
-		Reimbursement r = rd.getReimbursementbyID(2);
+		Reimbursement r = rd.getReimbursementbyID(9);
 		rd.DeleteReimbursement(r);
 	}
 
