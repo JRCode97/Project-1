@@ -42,9 +42,9 @@ public class ReimbursementServlet extends HttpServlet {
 		System.out.println(sess.getId()+" "+sess.getAttribute("password"));
 		if(uc.loginEmployee(request, response)) {
 		
-		response.sendRedirect("EmployeeHome.jsp");
+		response.sendRedirect("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/EmployeeHome.jsp");
 		}else if(uc.loginManager(request, response)) {
-			response.sendRedirect("ManagerHome.jsp");
+			response.sendRedirect("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/ManagerHome.jsp");
 		}
 		
 	}
