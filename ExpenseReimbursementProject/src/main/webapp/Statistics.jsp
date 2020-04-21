@@ -28,33 +28,33 @@ let amtOfDenied = document.getElementById("amtOfDenied");
 let totalReimbursements = document.getElementById("totalReimbursements");
 async function getHighestRequester(){
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/highestRequester");
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/highestRequester");
     let most = await httpResponse.json();
     highestRequester.innerHTML = `The person with the most requests is ${most}`;
 
     }
 async function getAvgReimbursement(){
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/avgReimbursement");
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/avgReimbursement");
     let avg = await httpResponse.json();
     avgReimbursement.innerHTML = `The average Reimbursement amount: ${avg}`;
 
     }
 async function getAmtOfApproved(){
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/amtOfApproved");
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/amtOfApproved");
     let approved = await httpResponse.json();
     amtOfApproved.innerHTML = `The amount of approved reimbursements ${approved}`;
     }
 async function getAmtOfDenied(){
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/amtOfDenied");
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/amtOfDenied");
     let denied = await httpResponse.json();
     amtOfDenied.innerHTML = `The amount of denied reimbursements ${denied}`;
     }
 async function getTotalReimbursements(){
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/totalReimbursements");
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/totalReimbursements");
     let tot = await httpResponse.json();
     totalReimbursements.innerHTML = `The total amount of reimbursements ${tot}`;
     }    

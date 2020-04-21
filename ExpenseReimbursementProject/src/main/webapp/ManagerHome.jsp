@@ -16,7 +16,7 @@ text-align:center;}
 <body>
 		<%
 			if(session.getAttribute("username")==null){
-				response.sendRedirect("index.html");
+				response.sendRedirect("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/index.html");
 			}
 		%>
 		<button id="logoutBtn" class="btn-default">Log out</button>
@@ -38,7 +38,7 @@ document.getElementById("statisticsBtn").addEventListener("click",statistics);
 
 async function getAllReimbursements(){
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/showPending");
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/showPending");
     let Reimbursements = await httpResponse.json();
     console.log(Reimbursements);
     if(Reimbursements!=""){
@@ -57,7 +57,7 @@ async function getAllReimbursements(){
 }
 async function getDeniedReimbursements(){
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/showDenied");
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/showDenied");
     let Reimbursements = await httpResponse.json();
     console.log(Reimbursements);
 	if(Reimbursements!=""){
@@ -74,7 +74,7 @@ async function getDeniedReimbursements(){
 }
 async function getApprovedReimbursements(){
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/showApproved");
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/showApproved");
     let Reimbursements = await httpResponse.json();
     console.log(Reimbursements);
     if(Reimbursements!=""){
@@ -106,7 +106,7 @@ async function approveReimbursement(element){
         body: JSON.stringify(reimbursement)
     }
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/approve", settings); 
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/approve", settings); 
     getAllReimbursements();
     getDeniedReimbursements();
     getApprovedReimbursements();
@@ -129,18 +129,18 @@ async function denyReimbursement(element){
         body: JSON.stringify(reimbursement)
     }
 
-    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/deny", settings); 
+    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/deny", settings); 
     getAllReimbursements();
     getDeniedReimbursements();
     getApprovedReimbursements();
 
 }
 async function LogOut(){
-	let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/logout");
-	window.location.href = "http://localhost:8080/ExpenseReimbursementProject/";
+	let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject//api/logout");
+	window.location.href = "http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/";
 }
 async function statistics(){
-	window.location.href = "http://localhost:8080/ExpenseReimbursementProject/Statistics.jsp";
+	window.location.href = "http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/Statistics.jsp";
 }
 getAllReimbursements();
 getDeniedReimbursements();
