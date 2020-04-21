@@ -25,7 +25,7 @@ public class EmployeeDAOdbtest {
 	}
 	@Test 
 	public void deleteEmployee() {
-		Employee e = ed.getEmployeeByID(1);
+		Employee e = ed.getEmployeeByID(4);
 		ed.DeleteEmployee(e);
 	}
 	@Test

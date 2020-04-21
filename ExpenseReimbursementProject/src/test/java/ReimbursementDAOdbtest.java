@@ -5,10 +5,12 @@ import java.util.*;
 import org.junit.Test;
 
 import dev.rivera.entities.*;
+import dev.rivera.services.*;
 import dev.rivera.daos.*;
 
 public class ReimbursementDAOdbtest {
 	ReimbursementDAO rd = new ReimbursementDAOdb();
+	ReimbursementService rs = new ReimbursementServiceimpl();
 	EmployeeDAO ed = new EmployeeDAOdb();
 	@Test
 	public void createReimbursement() {
@@ -31,8 +33,14 @@ public class ReimbursementDAOdbtest {
 	}
 	@Test
 	public void getReimbursementbyIDtest() {
-		Reimbursement r = rd.getReimbursementbyID(1);
+		Reimbursement r = rd.getReimbursementbyID(15);
 		System.out.println(r);
+		rs.approveReimbursement(r);
+		System.out.println(r);
+		rs.denyReimbursement(r);
+		System.out.println(r);
+		
+		
 	}
 	@Test
 	public void updateReimbursementtest() {
@@ -46,6 +54,22 @@ public class ReimbursementDAOdbtest {
 	public void deleteReimbursementtest() {
 		Reimbursement r = rd.getReimbursementbyID(9);
 		rd.DeleteReimbursement(r);
+	}
+	@Test 
+	public void getMostReimbursementMaker() {
+		System.out.println(rd.getMostReimbursementMaker());
+	}
+	@Test
+	public void getAvg() {
+		System.out.println(rd.getAverageReimbursementAmount());
+	}
+	@Test
+	public void getSumApproved() {
+		System.out.println(rd.getApprovedReimbursementAmount());
+	}
+	@Test
+	public void getSumDenied() {
+		System.out.println(rd.getDeniedReimbursementAmount());
 	}
 
 }

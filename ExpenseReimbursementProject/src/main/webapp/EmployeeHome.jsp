@@ -12,7 +12,7 @@
 				response.sendRedirect("index.html");
 			}
 		%>
-
+		<button id="logoutBtn">Log out</button>
         <h2 id="usernameHeading"></h2>
         <input id="descInput" type="text" placeholder="Description">
 		<input id="AmountInput" type="number" placeholder="Amount">
@@ -28,6 +28,7 @@
 <script>
 document.getElementById("allreimbursementsBtn").addEventListener("click",getAllReimbursements);
 document.getElementById("addReimbursementBtn").addEventListener("click",addReimbursement);
+document.getElementById("logoutBtn").addEventListener("click",LogOut);
 let tableData = document.getElementById("ReimbursementTable");
 async function getAllReimbursements(){
 
@@ -53,8 +54,11 @@ async function addReimbursement(){
         requesterId:0
     }
     // appending the properties to the object after it is created
-    Reimbursement.description = document.getElementById("descInput").value;
-    Reimbursement.amount = Number.parseInt(document.getElementById("AmountInput").value);
+    
+    let desc = document.getElementById("descInput");
+    let amt = document.getElementById("AmountInput");
+    Reimbursement.description = desc.value;
+    Reimbursement.amount = Number.parseInt(amt.value);
 
     let settings = {
         method:'POST',
@@ -69,6 +73,8 @@ async function addReimbursement(){
 	if($("#ReimbursementTable").is(':visible')){
 		getAllReimbursements();
 	}
+    desc.value = '';
+    amt.value = '';
 }
 
 async function showUser(){
@@ -100,6 +106,10 @@ async function deleteReimbursement(element){
 	}
   
 
+}
+async function LogOut(){
+	let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/logout");
+	window.location.href = "http://localhost:8080/ExpenseReimbursementProject/";
 }
 showUser();
 </script>

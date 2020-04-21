@@ -45,5 +45,34 @@ public class ReimbursementServiceimpl implements ReimbursementService {
 		
 		return rd.DeleteReimbursement(reimbursement);
 	}
+	@Override
+	public List<Reimbursement> getPendingReimbursements() {
+		
+		return rd.getPendingReimbursements();
+	}
+	@Override
+	public List<Reimbursement> getDeniedReimbursements() {
+		return rd.getDeniedReimbursements();
+	}
+	@Override
+	public List<Reimbursement> getApprovedReimbursements() {
+		return rd.getApprovedReimbursements();
+	}
+	@Override
+	public int getApprovedReimbursementAmount() {
+		return rd.getApprovedReimbursementAmount();
+	}
+	@Override
+	public int getDeniedReimbursementAmount() {
+		return rd.getDeniedReimbursementAmount();
+	}
+	@Override
+	public int getAverageReimbursementAmount() {
+		return rd.getAverageReimbursementAmount();
+	}
+	@Override
+	public String getMostReimbursementMaker() {
+		return rd.getMostReimbursementMaker();
+	}
 
 }
