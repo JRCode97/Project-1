@@ -10,7 +10,21 @@ public interface ReimbursementService {
 	
 	public List<Reimbursement> getAllReimbursements();
 	
+	public List<Reimbursement> getPendingReimbursements();
+	
+	public List<Reimbursement> getDeniedReimbursements();
+	
+	public List<Reimbursement> getApprovedReimbursements();
+	
 	public List<Reimbursement> getSpecificEmployeeReimbursments(Employee e);
+	
+	public int getApprovedReimbursementAmount();
+	
+	public int getDeniedReimbursementAmount();
+	
+	public int getAverageReimbursementAmount();
+	
+	public String getMostReimbursementMaker();
 	
 	public Reimbursement submitReimbursement(Reimbursement reimbursement);
 	

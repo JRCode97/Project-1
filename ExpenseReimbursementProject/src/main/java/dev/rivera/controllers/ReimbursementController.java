@@ -32,6 +32,54 @@ public void getAllReimbursements(HttpServletRequest request, HttpServletResponse
 			e.printStackTrace();
 		}}
 
+
+public void getApprovedReimbursements(HttpServletRequest request, HttpServletResponse response) {
+	
+	
+	List<Reimbursement> reimbursements = rs.getApprovedReimbursements();
+	System.out.println("list of reimbursements"+reimbursements);
+	try {
+		Gson gson = new Gson();
+		PrintWriter pw = response.getWriter();
+		String json = gson.toJson(reimbursements);
+		pw.append(json);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
+
+
+public void getDeniedReimbursements(HttpServletRequest request, HttpServletResponse response) {
+	
+	
+	List<Reimbursement> reimbursements = rs.getDeniedReimbursements();
+	System.out.println("list of reimbursements"+reimbursements);
+	try {
+		Gson gson = new Gson();
+		PrintWriter pw = response.getWriter();
+		String json = gson.toJson(reimbursements);
+		pw.append(json);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
+
+public void getPendingReimbursements(HttpServletRequest request, HttpServletResponse response) {
+	
+	
+	List<Reimbursement> reimbursements = rs.getPendingReimbursements();
+	System.out.println("list of reimbursements"+reimbursements);
+	try {
+		Gson gson = new Gson();
+		PrintWriter pw = response.getWriter();
+		String json = gson.toJson(reimbursements);
+		pw.append(json);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
+
+
 public void getSpecificEmployeeReimbursements(HttpServletRequest request, HttpServletResponse response) {
 	
 	Employee e = us.loginEmployee((String)request.getSession().getAttribute("username"),(String) request.getSession().getAttribute("password"));
@@ -48,7 +96,61 @@ public void getSpecificEmployeeReimbursements(HttpServletRequest request, HttpSe
 		ex.printStackTrace();
 	}}
 
+public void getMostReimbursementMaker(HttpServletRequest request, HttpServletResponse response) {
+	
+	
+	String person = rs.getMostReimbursementMaker();
+	try {
+		Gson gson = new Gson();
+		PrintWriter pw = response.getWriter();
+		String json = gson.toJson(person);
+		pw.append(json);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
+public void getAverageReimbursementAmount(HttpServletRequest request, HttpServletResponse response) {
+	
+	
+	int avg = rs.getAverageReimbursementAmount();
 
+	try {
+		Gson gson = new Gson();
+		PrintWriter pw = response.getWriter();
+		String json = gson.toJson(avg);
+		pw.append(json);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
+public void getApprovedReimbursementAmount(HttpServletRequest request, HttpServletResponse response) {
+	
+	
+	int approvedAmount = rs.getApprovedReimbursementAmount();
+
+	try {
+		Gson gson = new Gson();
+		PrintWriter pw = response.getWriter();
+		String json = gson.toJson(approvedAmount);
+		pw.append(json);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
+public void getDeniedReimbursementAmount(HttpServletRequest request, HttpServletResponse response) {
+	
+	
+	int deniedAmount = rs.getDeniedReimbursementAmount();
+
+	try {
+		Gson gson = new Gson();
+		PrintWriter pw = response.getWriter();
+		String json = gson.toJson(deniedAmount);
+		pw.append(json);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}}
 public void addReimbursement(HttpServletRequest request, HttpServletResponse response) {
 	try {
 		Gson gson = new Gson();

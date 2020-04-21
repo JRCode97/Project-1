@@ -58,7 +58,75 @@ public class ReimbursementDAOdb implements ReimbursementDAO {
 	}
 	return reimbursements;
 	}
-
+	public List<Reimbursement> getPendingReimbursements() {
+		List<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS =?";
+			PreparedStatement recieve = con.prepareStatement(Query);
+			recieve.setString(1, "pending");
+			ResultSet rs = recieve.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("found reimbursement");
+				Reimbursement currentReimbursement = new Reimbursement(rs.getInt("ID"),rs.getInt("AMOUNT"),rs.getString("DESCRIPTION"),rs.getInt("REQUESTERID"),rs.getString("STATUS"));
+				System.out.println(currentReimbursement);
+				reimbursements.add(currentReimbursement);
+			}if(!rs.next())
+				System.out.println("no reimbursements found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+	return reimbursements;
+	}
+	
+	public List<Reimbursement> getDeniedReimbursements() {
+		List<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS =?";
+			PreparedStatement recieve = con.prepareStatement(Query);
+			recieve.setString(1, "denied");
+			ResultSet rs = recieve.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("found reimbursement");
+				Reimbursement currentReimbursement = new Reimbursement(rs.getInt("ID"),rs.getInt("AMOUNT"),rs.getString("DESCRIPTION"),rs.getInt("REQUESTERID"),rs.getString("STATUS"));
+				System.out.println(currentReimbursement);
+				reimbursements.add(currentReimbursement);
+			}if(!rs.next())
+				System.out.println("no reimbursements found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+	return reimbursements;
+	}
+	
+	public List<Reimbursement> getApprovedReimbursements() {
+		List<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS = 'approved'";
+			PreparedStatement recieve = con.prepareStatement(Query);
+			ResultSet rs = recieve.executeQuery();
+			
+			while(rs.next()) {
+				System.out.println("found reimbursement");
+				Reimbursement currentReimbursement = new Reimbursement(rs.getInt("ID"),rs.getInt("AMOUNT"),rs.getString("DESCRIPTION"),rs.getInt("REQUESTERID"),rs.getString("STATUS"));
+				System.out.println(currentReimbursement);
+				reimbursements.add(currentReimbursement);
+			}if(!rs.next())
+				System.out.println("no reimbursements found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+	return reimbursements;
+	}
+	
+	
 	public Reimbursement getReimbursementbyID(int id) {
 		Reimbursement reimbursement = null;
 try(Connection con = ConnectionUtils.createConnection()) {
@@ -138,6 +206,85 @@ try(Connection con = ConnectionUtils.createConnection()) {
 			System.out.println(ex);
 		}
 			return false;
+	}
+	@Override
+	public String getMostReimbursementMaker() {
+		String most="";
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT EMPLOYEE.NAME,COUNT(REIMBURSEMENT.ID) AS TOT FROM REIMBURSEMENT,EMPLOYEE WHERE REIMBURSEMENT.REQUESTERID = EMPLOYEE.ID GROUP BY REQUESTERID ORDER BY TOT DESC;";
+			PreparedStatement recieve = con.prepareStatement(Query);
+			ResultSet rs = recieve.executeQuery();
+			
+			if(rs.next()) {
+				most = rs.getString("NAME");
+				return most;
+			}if(!rs.next())
+				System.out.println("no records found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+		return most;
+	}
+	@Override
+	public int getAverageReimbursementAmount() {
+		int average = 0;
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT AVG(AMOUNT)AS avg FROM REIMBURSEMENT";
+			PreparedStatement recieve = con.prepareStatement(Query);
+			ResultSet rs = recieve.executeQuery();
+			
+			if(rs.next()) {
+				average = rs.getInt("avg");
+				return average;
+			}if(!rs.next())
+				System.out.println("no records found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+		return average;
+	}
+	@Override
+	public int getApprovedReimbursementAmount() {
+		int average = 0;
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT SUM(AMOUNT) AS sum FROM REIMBURSEMENT WHERE STATUS = 'approved'";			PreparedStatement recieve = con.prepareStatement(Query);
+			ResultSet rs = recieve.executeQuery();
+			
+			if(rs.next()) {
+				average = rs.getInt("sum");
+				return average;
+			}if(!rs.next())
+				System.out.println("no records found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+		return average;
+	}
+	@Override
+	public int getDeniedReimbursementAmount() {
+		int average = 0;
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT SUM(AMOUNT) AS sum FROM REIMBURSEMENT WHERE STATUS = 'denied'";
+			PreparedStatement recieve = con.prepareStatement(Query);
+			ResultSet rs = recieve.executeQuery();
+			
+			if(rs.next()) {
+				average = rs.getInt("sum");
+				return average;
+			}if(!rs.next())
+				System.out.println("no records found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+		return average;
 	}
 
 

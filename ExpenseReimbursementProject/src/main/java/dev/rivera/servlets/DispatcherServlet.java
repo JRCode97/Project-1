@@ -44,10 +44,37 @@ public class DispatcherServlet extends HttpServlet {
 			rc.denyReimbursement(request, response);
 			
 		break;
-		case "/ExpenseReimbursementProject/api/showall": 
-			rc.getAllReimbursements(request, response);
+		case "/ExpenseReimbursementProject/api/showPending": 
+			rc.getPendingReimbursements(request, response);
 		break;
+		case "/ExpenseReimbursementProject/api/showDenied": 
+			rc.getDeniedReimbursements(request, response);
+		break;
+		case "/ExpenseReimbursementProject/api/showApproved": 
+			rc.getApprovedReimbursements(request, response);
+		break;
+		case "/ExpenseReimbursementProject/api/logOut": 
+			request.getSession().removeAttribute("username");
+			request.getSession().removeAttribute("password");
+			request.getSession().removeAttribute("name");
+			request.getSession().invalidate();
 
+		break;
+		case"/ExpenseReimbursementProject/api/highestRequester":
+			rc.getMostReimbursementMaker(request, response);
+			break;
+		case"/ExpenseReimbursementProject/api/avgReimbursement":
+			rc.getAverageReimbursementAmount(request, response);
+			break;
+		case"/ExpenseReimbursementProject/api/amtOfApproved":
+			rc.getApprovedReimbursementAmount(request, response);
+			break;
+		case"/ExpenseReimbursementProject/api/amtOfDenied":
+			rc.getDeniedReimbursementAmount(request, response);
+			break;
+		case"/ExpenseReimbursementProject/api/totalReimbursements":
+			
+			break;	
 		default : response.getWriter().append("your request uri did not match anything "+ uri);break;
 		}
 	}
