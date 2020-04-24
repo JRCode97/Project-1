@@ -33,7 +33,7 @@ src: url(Saiyan-Sans.ttf);
 	border-radius:10%;}
 	table{
 	position:relative;
-	left:250px;
+	margin-top:20px;
 	background-color:black;
 	color:white;}
 	td{
