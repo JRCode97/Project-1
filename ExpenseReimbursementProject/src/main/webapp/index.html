@@ -2,36 +2,173 @@
 <html>
     <head>
         <title>Log In</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
         <style>
+            @font-face {
+             font-family: dragonballFont;
+             src: url(Saiyan-Sans.ttf);
+             }
+             #title{
+                 font-family: dragonballFont;
+                 font-size:50pt;
+                 margin-bottom:20px;
+             }
+			body{
+			font-family: dragonballFont;
+			background-image:url("bg.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            overflow: hidden;
+			}
             header{
-                text-align: center;
+                text-align:center;
+                color:aliceblue;
+                
+               
             }
+            form
+            {
+                background-color: blue;
+                border-radius: 15%;
+                border-color: orange;
+                border-width: 2px;
+                border-style:solid;
+                display: block;
+                width:30%;
+                height:50%;
+                
+                
+            }
+            button{
+                margin-bottom:20%;
+                height:30px;
+                width:70px;
+                border: none;
+                border-radius: 20%;
+            }
+            button:hover{
+                height:35px;
+                width:90px;
+                background-color: darkslategrey;
+                color:blue;
+                border: none;
+                border-radius: 20%;
+            }
+            input{
+                margin: 10% 0 10% 0;
+                width:80%;
+                height:20%;
+            }
+            input:active,input:hover,input:focus{
+                background-color:black;
+                color:orange;
+            }
+            #passWordIn{
+                margin-top:0;
+            }
+
             #logIn{
                 text-align: center;
+            }
+            #formBox{
+                text-align: center;
+                position: relative;
+                left:35%;
+            }
+            #ballPic{
+                height:15%;
+                width:15%;
+                position: relative;
+
             }
         </style>
     </head>
     <body>
+    	<img src="ball.png" href="ball" id="ballPic">
         <header>
-            <h1> Reimbursement System</h1>
+        
+            <h1 id="title"> Reimbursement System</h1>
         </header>
+        <div id="formBox">
         <form id="logIn" action="ReimbursementServlet">
-            <input type=text id="userNameIn" name="username"placeholder="Enter Username">
-            <input type="password" id="passWordIn" name="password"placeholder="Enter Password">
-            <button id="signInBtn">Sign In</button>
+            <input type=text id="userNameIn" name="username"placeholder="Enter Username"><br />
+            <input type="password" id="passWordIn" name="password"placeholder="Enter Password"><br />
+            <button id="signInBtn" class="btn-active">Sign In</button>
         </form>
+    </div>
     </body>
     <script>
-  // let signin = document.getElementById("signInBtn");
- //   signin.addEventListener("click",login);
- //   async function login(){
- //       let username = document.getElementById("userNameIn").value;
- //       let password = document.getElementById("passWordIn").value;
-// let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/ReimbursementServlet?employeelogin?username="+username+"&?password="+password)
-       
-       //redirects me to another page
-        //window.location.href="http://localhost:8080/ExpenseReimbursementProject/EmployeeHome.jsp";
-//    }
+        function MoveDown() {
+  var elem = document.getElementById("ballPic");   
+  var pos = 0;
+  var down = setInterval(frame, 5);
+
+  function frame() {
+    if (pos == 600) {
+      clearInterval(down);
+      MoveRight();
+      
+    } else {
+      pos++; 
+      elem.style.top = pos + "px"; 
+
+    }
+
+  }
+}
+function MoveRight() {
+  var elem = document.getElementById("ballPic");   
+  var pos = 0;
+  var left = setInterval(frame, 5);
+  function frame() {
+    if (pos == 700) {
+      clearInterval(left);
+      MoveUp();
+      
+    } else {
+      pos++; 
+      elem.style.left = pos + "px"; 
+
+    }
+
+  }
+}
+function MoveUp() {
+  var elem = document.getElementById("ballPic");   
+  var pos = 600;
+  var left = setInterval(frame, 5);
+  function frame() {
+    if (pos == 0) {
+      clearInterval(left);
+      Moveleft();
+      
+    } else {
+      pos--; 
+      elem.style.top = pos + "px"; 
+
+    }
+
+  }
+}
+function Moveleft() {
+  var elem = document.getElementById("ballPic");   
+  var pos = 700;
+  var left = setInterval(frame, 5);
+  function frame() {
+    if (pos == 0) {
+      clearInterval(left);
+      MoveDown();
+      
+    } else {
+      pos--; 
+      elem.style.left = pos + "px"; 
+
+    }
+
+  }
+}
+MoveDown();
  
     </script>
 </html>

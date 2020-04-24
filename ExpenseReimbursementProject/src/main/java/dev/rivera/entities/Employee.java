@@ -5,15 +5,23 @@ public class Employee {
 	private String name;
 	private String username;
 	private String password;
+	private String workForce;
 	public Employee() {
 		super();
 	}
-	public Employee(int eId, String username, String password,String name) {
+	public Employee(int eId, String username, String password,String name,String workForce) {
 		super();
 		this.eId = eId;
 		this.username = username;
 		this.password = password;
 		this.name = name;
+		this.workForce = workForce;
+	}
+	public String getWorkForce() {
+		return workForce;
+	}
+	public void setWorkForce(String workForce) {
+		this.workForce = workForce;
 	}
 	public int geteId() {
 		return eId;
@@ -42,7 +50,9 @@ public class Employee {
 	}
 	@Override
 	public String toString() {
-		return "Employee [eId=" + eId + ", username=" + username + ", password=" + password + "]";
+		return "Employee [eId=" + eId + ", name=" + name + ", username=" + username + ", password=" + password
+				+ ", workForce=" + workForce + "]";
 	}
+	
 	
 }

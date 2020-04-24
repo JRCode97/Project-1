@@ -22,10 +22,29 @@ public class ManagerDAOdbtest {
 		m = md.getManagerByID(1);
 		System.out.println(m);
 	}
+	@Test
+	public void getManagerBudget() {
+		Manager m = md.getManagerByID(1);
+		int b = md.getManagerBudget(m);
+		System.out.println(b);
+	}
 	@Test 
-	public void deleteEmployee() {
+	public void deleteManager() {
 		Manager m = md.getManagerByID(1);
 		md.DeleteManager(m);
+	}
+	@Test 
+	public void updateManagerBudget() {
+		Manager m = md.getManagerByID(1);
+		md.updateManagerBudget(4000000, m);
+		int budget = md.getManagerBudget(m);
+		System.out.println(budget);
+	}
+	@Test 
+	public void getEmployeesinWorkforce()
+	{
+		Manager m = md.getManagerByID(2);
+		System.out.println(md.getEmployeesfromManagerWorkForce(m));
 	}
 
 }
