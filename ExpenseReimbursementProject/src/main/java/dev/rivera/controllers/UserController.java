@@ -47,6 +47,7 @@ public boolean loginManager(HttpServletRequest request, HttpServletResponse resp
 		//String password = (String) request.getAttribute("password");
 		Manager m = us.loginManager(username, password);
 		if(m!=null) {
+			request.getSession().setAttribute("id", Integer.toString(m.getmId()));
 		System.out.println("this is the session still"+ request.getSession().getId()+m);
 		try {
 			Gson gson = new Gson();

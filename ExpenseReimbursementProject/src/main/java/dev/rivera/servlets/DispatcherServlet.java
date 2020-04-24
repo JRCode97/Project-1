@@ -32,6 +32,10 @@ public class DispatcherServlet extends HttpServlet {
 			rc.addReimbursement(request, response); 
 			
 		break;
+		case "/ExpenseReimbursementProject/api/getName": 
+			rc.getManagerName(request, response);
+			
+		break;
 		case "/ExpenseReimbursementProject/api/delete": 
 			rc.deleteReimbursement(request, response);
 			
@@ -72,9 +76,21 @@ public class DispatcherServlet extends HttpServlet {
 		case"/ExpenseReimbursementProject/api/amtOfDenied":
 			rc.getDeniedReimbursementAmount(request, response);
 			break;
-		case"/ExpenseReimbursementProject/api/totalReimbursements":
-			
-			break;	
+		case"/ExpenseReimbursementProject/api/highestRequesterinWorkForce":
+			rc.getMostReimbursementMaker(request, response);
+			break;
+		case"/ExpenseReimbursementProject/api/avgReimbursementinWorkForce":
+			rc.getAverageReimbursementAmount(request, response);
+			break;
+		case"/ExpenseReimbursementProject/api/amtOfApprovedinWorkForce":
+			rc.getApprovedReimbursementAmount(request, response);
+			break;
+		case"/ExpenseReimbursementProject/api/amtOfDeniedinWorkForce":
+			rc.getDeniedReimbursementAmount(request, response);
+			break;
+		case"/ExpenseReimbursementProject/api/getEmployeesinWorkForce":
+			rc.getCurrentManagersEmployees(request, response);
+			break;
 		default : response.getWriter().append("your request uri did not match anything "+ uri);break;
 		}
 	}

@@ -7,20 +7,36 @@
 <title>Manager Home</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <style>
+ @font-face {
+font-family: dragonballFont;
+src: url(Saiyan-Sans.ttf);
+}    
 #statisticsBtn{
 float:right;}
 .tableTitle{
-text-align:center;}
+text-align:center;
+font-family:dragonballFont;
+color:purple;}
+body{
+font-family: dragonballFont;
+background-color:#00022E;}
+table{
+background-color:green;
+border:solid purple 2px; 
+}
+button{
+background-color:grey;}
+
 </style>
 </head>
 <body>
 		<%
 			if(session.getAttribute("username")==null){
-				response.sendRedirect("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/index.html");
+				response.sendRedirect("index.html");
 			}
 		%>
 		<button id="logoutBtn" class="btn-default">Log out</button>
-		<button id="statisticsBtn" class="btn-primary">Statistics</button>
+		<button id="statisticsBtn" class="btn-default">Statistics</button>
 		<h2 class="tableTitle">Pending Reimbursemenents</h2>
         <table id="pendingReimbursementTable" class="table table-hover"></table>
         <h2 class="tableTitle">Approved Reimbursemenents</h2>
@@ -38,7 +54,7 @@ document.getElementById("statisticsBtn").addEventListener("click",statistics);
 
 async function getAllReimbursements(){
 
-    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/showPending");
+    let httpResponse = await fetch("http://localhost:8080/ExpenseReimbursementProject/api/showPending");
     let Reimbursements = await httpResponse.json();
     console.log(Reimbursements);
     if(Reimbursements!=""){
@@ -57,7 +73,7 @@ async function getAllReimbursements(){
 }
 async function getDeniedReimbursements(){
 
-    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/showDenied");
+    let httpResponse = await fetch(`http://${window.location.hostname}:8080/ExpenseReimbursementProject/api/showDenied`);
     let Reimbursements = await httpResponse.json();
     console.log(Reimbursements);
 	if(Reimbursements!=""){
@@ -66,15 +82,14 @@ async function getDeniedReimbursements(){
 
     for(reimbursement of Reimbursements){
         deniedTable.innerHTML = deniedTable.innerHTML + `<tr><td>${reimbursement.description} </td> 
-        <td> ${reimbursement.amount}</td> <td> ${reimbursement.requesterId}</td> <td>
-     <button class="btn btn-success" rID=${reimbursement.rId} amount=${reimbursement.amount} desc="${reimbursement.description}" Status="${reimbursement.status}" requesterId=${reimbursement.requesterId} onclick="approveReimbursement(this);">Approve</button> </td>
+        <td> ${reimbursement.amount}</td> <td> ${reimbursement.requesterId}</td> 
 </tr>`;
     }}
 
 }
 async function getApprovedReimbursements(){
 
-    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/showApproved");
+    let httpResponse = await fetch(`http://${window.location.hostname}:8080/ExpenseReimbursementProject/api/showApproved`);
     let Reimbursements = await httpResponse.json();
     console.log(Reimbursements);
     if(Reimbursements!=""){
@@ -83,8 +98,7 @@ async function getApprovedReimbursements(){
 
     for(reimbursement of Reimbursements){
         approvedTable.innerHTML = approvedTable.innerHTML + `<tr><td>${reimbursement.description} </td> 
-        <td> ${reimbursement.amount}</td> <td> ${reimbursement.requesterId}</td> <td>
-     <button class="btn btn-danger" rID=${reimbursement.rId} amount=${reimbursement.amount} desc="${reimbursement.description}" Status="${reimbursement.status}"  requesterId=${reimbursement.requesterId} onclick="denyReimbursement(this);">Deny</button> </td></tr>`;
+        <td> ${reimbursement.amount}</td> <td> ${reimbursement.requesterId}</td> </tr>`;
     }
     }
 }
@@ -106,7 +120,7 @@ async function approveReimbursement(element){
         body: JSON.stringify(reimbursement)
     }
 
-    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/approve", settings); 
+    let httpResponse = await fetch(`http://${window.location.hostname}:8080/ExpenseReimbursementProject/api/approve`, settings); 
     getAllReimbursements();
     getDeniedReimbursements();
     getApprovedReimbursements();
@@ -129,19 +143,20 @@ async function denyReimbursement(element){
         body: JSON.stringify(reimbursement)
     }
 
-    let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/api/deny", settings); 
+    let httpResponse = await fetch(`http://${window.location.hostname}:8080/ExpenseReimbursementProject/api/deny`, settings); 
     getAllReimbursements();
     getDeniedReimbursements();
     getApprovedReimbursements();
 
 }
 async function LogOut(){
-	let httpResponse = await fetch("http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject//api/logout");
-	window.location.href = "http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/";
+	let httpResponse = await fetch(`http://${window.location.hostname}:8080/ExpenseReimbursementProject//api/logout`);
+	window.location.href = `http://${window.location.hostname}:8080/ExpenseReimbursementProject/`;
 }
 async function statistics(){
-	window.location.href = "http://ec2-18-191-60-107.us-east-2.compute.amazonaws.com:8080/ExpenseReimbursementProject/Statistics.jsp";
+	window.location.href = `http://${window.location.hostname}:8080/ExpenseReimbursementProject/Statistics.jsp`;
 }
+
 getAllReimbursements();
 getDeniedReimbursements();
 getApprovedReimbursements();

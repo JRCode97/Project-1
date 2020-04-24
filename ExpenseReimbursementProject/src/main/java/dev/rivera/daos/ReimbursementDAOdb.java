@@ -58,14 +58,14 @@ public class ReimbursementDAOdb implements ReimbursementDAO {
 	}
 	return reimbursements;
 	}
-	public List<Reimbursement> getPendingReimbursements() {
+	public List<Reimbursement> getPendingReimbursements(int id) {
 		List<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
 		try(Connection con = ConnectionUtils.createConnection()) {
 			
 			
-			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS =?";
+			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS = 'pending' and REIMBURSEMENT.REQUESTERID IN(SELECT ID FROM EMPLOYEE WHERE WORKFORCE_NAME IN (SELECT WORKFORCE_NAME FROM MANAGER WHERE ID = ?) );";
 			PreparedStatement recieve = con.prepareStatement(Query);
-			recieve.setString(1, "pending");
+			recieve.setInt(1,id);
 			ResultSet rs = recieve.executeQuery();
 			
 			while(rs.next()) {
@@ -81,14 +81,14 @@ public class ReimbursementDAOdb implements ReimbursementDAO {
 	return reimbursements;
 	}
 	
-	public List<Reimbursement> getDeniedReimbursements() {
+	public List<Reimbursement> getDeniedReimbursements(int id) {
 		List<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
 		try(Connection con = ConnectionUtils.createConnection()) {
 			
 			
-			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS =?";
+			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS = 'denied' and REIMBURSEMENT.REQUESTERID IN(SELECT ID FROM EMPLOYEE WHERE WORKFORCE_NAME IN (SELECT WORKFORCE_NAME FROM MANAGER WHERE ID = ?) );";
 			PreparedStatement recieve = con.prepareStatement(Query);
-			recieve.setString(1, "denied");
+			recieve.setInt(1,id);
 			ResultSet rs = recieve.executeQuery();
 			
 			while(rs.next()) {
@@ -104,13 +104,14 @@ public class ReimbursementDAOdb implements ReimbursementDAO {
 	return reimbursements;
 	}
 	
-	public List<Reimbursement> getApprovedReimbursements() {
+	public List<Reimbursement> getApprovedReimbursements(int id) {
 		List<Reimbursement> reimbursements = new ArrayList<Reimbursement>();
 		try(Connection con = ConnectionUtils.createConnection()) {
 			
 			
-			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS = 'approved'";
+			String Query = "SELECT * FROM REIMBURSEMENT WHERE STATUS = 'approved' and REIMBURSEMENT.REQUESTERID IN(SELECT ID FROM EMPLOYEE WHERE WORKFORCE_NAME IN (SELECT WORKFORCE_NAME FROM MANAGER WHERE ID = ?) );";
 			PreparedStatement recieve = con.prepareStatement(Query);
+			recieve.setInt(1,id);
 			ResultSet rs = recieve.executeQuery();
 			
 			while(rs.next()) {
@@ -253,7 +254,8 @@ try(Connection con = ConnectionUtils.createConnection()) {
 		try(Connection con = ConnectionUtils.createConnection()) {
 			
 			
-			String Query = "SELECT SUM(AMOUNT) AS sum FROM REIMBURSEMENT WHERE STATUS = 'approved'";			PreparedStatement recieve = con.prepareStatement(Query);
+			String Query = "SELECT SUM(AMOUNT) AS sum FROM REIMBURSEMENT WHERE STATUS = 'approved'";			
+			PreparedStatement recieve = con.prepareStatement(Query);
 			ResultSet rs = recieve.executeQuery();
 			
 			if(rs.next()) {
@@ -286,9 +288,95 @@ try(Connection con = ConnectionUtils.createConnection()) {
 	}
 		return average;
 	}
-
-
-
-
-
+	@Override
+	public String getMostReimbursementMakerforWorkForce(int id) {
+		String most="";
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT EMPLOYEE.NAME,COUNT(REIMBURSEMENT.ID) AS TOT FROM REIMBURSEMENT,EMPLOYEE WHERE REIMBURSEMENT.REQUESTERID = EMPLOYEE.ID AND EMPLOYEE.WORKFORCE_NAME IN (SELECT WORKFORCE_NAME FROM MANAGER WHERE ID = ? ) GROUP BY REQUESTERID ORDER BY TOT DESC;";
+			PreparedStatement recieve = con.prepareStatement(Query);
+			recieve.setInt(1, id);
+			ResultSet rs = recieve.executeQuery();
+			
+			if(rs.next()) {
+				most = rs.getString("NAME");
+				return most;
+			}if(!rs.next())
+				System.out.println("no records found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+		return most;
+	}
+	
+	@Override
+	public int getAverageReimbursementAmountforWorkForce(int id) {
+		int average = 0;
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT AVG(AMOUNT)AS avg FROM REIMBURSEMENT WHERE REQUESTERID IN (SELECT ID FROM EMPLOYEE WHERE WORKFORCE_NAME IN (SELECT WORKFORCE_NAME FROM MANAGER WHERE ID =?)) ";
+			PreparedStatement recieve = con.prepareStatement(Query);
+			recieve.setInt(1, id);
+			ResultSet rs = recieve.executeQuery();
+			
+			if(rs.next()) {
+				average = rs.getInt("avg");
+				return average;
+			}if(!rs.next())
+				System.out.println("no records found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+		return average;
+	}
+	@Override
+	public int getApprovedReimbursementAmountforWorkForce(int id) {
+		int SUM = 0;
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT SUM(AMOUNT) AS sum FROM REIMBURSEMENT WHERE STATUS = 'approved' AND REQUESTERID IN (SELECT ID FROM EMPLOYEE WHERE WORKFORCE_NAME IN (SELECT WORKFORCE_NAME FROM MANAGER WHERE ID =?))";			
+			PreparedStatement recieve = con.prepareStatement(Query);
+			recieve.setInt(1, id);
+			ResultSet rs = recieve.executeQuery();
+			
+			if(rs.next()) {
+				SUM = rs.getInt("sum");
+				return SUM;
+			}if(!rs.next())
+				System.out.println("no records found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+		return SUM;
+	}
+	@Override
+	public int getDeniedReimbursementAmountforWorkForce(int id) {
+		int SUM = 0;
+		try(Connection con = ConnectionUtils.createConnection()) {
+			
+			
+			String Query = "SELECT SUM(AMOUNT) AS sum FROM REIMBURSEMENT WHERE STATUS = 'denied' AND REQUESTERID IN (SELECT ID FROM EMPLOYEE WHERE WORKFORCE_NAME IN (SELECT WORKFORCE_NAME FROM MANAGER WHERE ID =?))";			
+			PreparedStatement recieve = con.prepareStatement(Query);
+			recieve.setInt(1, id);
+			ResultSet rs = recieve.executeQuery();
+			
+			if(rs.next()) {
+				SUM = rs.getInt("sum");
+				return SUM;
+			}if(!rs.next())
+				System.out.println("no records found");
+	}catch(SQLException e){
+		e.printStackTrace();
+	}
+		return SUM;
+	}
 }
+
+
+
+
+
+
