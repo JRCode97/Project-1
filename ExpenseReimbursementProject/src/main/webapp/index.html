@@ -58,10 +58,12 @@
             input{
                 margin: 10% 0 10% 0;
                 width:80%;
-                height:20%;
+                border:none;
+                height:100%;
             }
             input:active,input:hover,input:focus{
                 background-color:black;
+                border:none;
                 color:orange;
             }
             #passWordIn{
@@ -82,6 +84,7 @@
                 position: relative;
 
             }
+    
         </style>
     </head>
     <body>
@@ -94,6 +97,7 @@
         <form id="logIn" action="ReimbursementServlet">
             <input type=text id="userNameIn" name="username"placeholder="Enter Username"><br />
             <input type="password" id="passWordIn" name="password"placeholder="Enter Password"><br />
+
             <button id="signInBtn" class="btn-active">Sign In</button>
         </form>
     </div>
