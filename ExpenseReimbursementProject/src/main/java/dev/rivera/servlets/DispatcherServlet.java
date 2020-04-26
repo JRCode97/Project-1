@@ -77,16 +77,16 @@ public class DispatcherServlet extends HttpServlet {
 			rc.getDeniedReimbursementAmount(request, response);
 			break;
 		case"/ExpenseReimbursementProject/api/highestRequesterinWorkForce":
-			rc.getMostReimbursementMaker(request, response);
+			rc.getMostReimbursementMakerforWorkForce(request, response);
 			break;
 		case"/ExpenseReimbursementProject/api/avgReimbursementinWorkForce":
-			rc.getAverageReimbursementAmount(request, response);
+			rc.getAverageReimbursementAmountforWorkForce(request, response);
 			break;
 		case"/ExpenseReimbursementProject/api/amtOfApprovedinWorkForce":
-			rc.getApprovedReimbursementAmount(request, response);
+			rc.getApprovedReimbursementAmountforWorkForce(request, response);
 			break;
 		case"/ExpenseReimbursementProject/api/amtOfDeniedinWorkForce":
-			rc.getDeniedReimbursementAmount(request, response);
+			rc.getDeniedReimbursementAmountforWorkForce(request, response);
 			break;
 		case"/ExpenseReimbursementProject/api/getEmployeesinWorkForce":
 			rc.getCurrentManagersEmployees(request, response);

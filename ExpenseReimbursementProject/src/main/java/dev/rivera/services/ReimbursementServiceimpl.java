@@ -69,7 +69,7 @@ public class ReimbursementServiceimpl implements ReimbursementService {
 	}
 	@Override
 	public List<Reimbursement> getDeniedReimbursements(int id) {
-		return rd.getDeniedReimbursements( id);
+		return rd.getDeniedReimbursements(id);
 	}
 	@Override
 	public List<Reimbursement> getApprovedReimbursements(int id) {
